@@ -18,8 +18,8 @@ async function main() {
         panic("status:", status, data.text);
       }
       loaded += 1;
-    } catch (_) {
-      /* error */
+    } catch (e) {
+      panic(e.message);
     }
     next = data.pop();
   }
