@@ -4,7 +4,7 @@ services:
     container_name: splunk_forwarder
     image: splunk/splunk:latest
     volumes:
-      - ./splunk/forwarder/SplunkForwarder/default:/opt/splunk/etc/apps/SplunkForwarder/default
+      - ./splunk/forwarder/outputs.conf:/opt/splunk/etc/system/local/outputs.conf
     ports:
       - 8000:8000
       - 8088-8089:8088-8089
@@ -14,8 +14,6 @@ services:
   receiver:
     container_name: splunk_receiver
     image: splunk/splunk:latest
-    volumes:
-      - ./splunk/receiver/SplunkForwarder/default:/opt/splunk/etc/apps/SplunkForwarder/default
     ports:
       - 8001:8000
       - 18088-18089:8088-8089
