@@ -4,6 +4,19 @@
 docker run -d -p 8000:8000 -p 8088-8089:8088-8089 -e "SPLUNK_START_ARGS=--accept-license" -e "SPLUNK_PASSWORD=E7NK_6W*m_elWtPd" --name splunk splunk/splunk:latest
 ```
 
+### Splunk Forwarder Config
+
+Path to a config folder in Docker
+```
+/opt/splunk/etc/apps/SplunkForwarder/default
+
+server.conf
+outputs.conf
+health.conf
+default-mode.conf
+app.conf
+```
+
 ### Splunk REST API Reference Manual
 
 https://docs.splunk.com/Documentation/Splunk/8.2.5/RESTREF/RESTinput
@@ -49,3 +62,8 @@ curl -v -H'If-Modified-Since: Sun, 20 Feb 2022 20:36:46 GMT' https://cve.mitre.o
 You can forward data from one Splunk Enterprise instance to another Splunk Enterprise instance or even to a non-Splunk system. The Splunk instance that performs the [forwarding](https://docs.splunk.com/Splexicon:Forwarding) is called a [forwarder](https://docs.splunk.com/Splexicon:Forwarder).
 
 
+#### Types of Forwarders
+
+**The universal forwarder** contains only the components that are necessary to forward data. Learn more about the universal forwarder in the Universal Forwarder manual. The universal forwarder **supersedes** the light forwarder for nearly all purposes and represents the best tool for sending data to indexers
+
+**The heavy forwarder** is a full Splunk Enterprise instance that can index, search, and change data as well as forward it. The heavy forwarder has some features disabled to reduce system resource usage.
