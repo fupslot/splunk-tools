@@ -1,22 +1,13 @@
 version: '3.7'
 services:
-  forwarder:
+  splunk:
     container_name: splunk_forwarder
     image: splunk/splunk:latest
     volumes:
-      - ./splunk/forwarder/outputs.conf:/opt/splunk/etc/system/local/outputs.conf
+      - ./splunk/outputs.conf:/opt/splunk/etc/system/local/outputs.conf
     ports:
       - 8000:8000
       - 8088-8089:8088-8089
-    environment:
-      - SPLUNK_START_ARGS=--accept-license
-      - SPLUNK_PASSWORD=E7NK_6W*m_elWtPd
-  receiver:
-    container_name: splunk_receiver
-    image: splunk/splunk:latest
-    ports:
-      - 8001:8000
-      - 18088-18089:8088-8089
     environment:
       - SPLUNK_START_ARGS=--accept-license
       - SPLUNK_PASSWORD=E7NK_6W*m_elWtPd

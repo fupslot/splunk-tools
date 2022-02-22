@@ -1,3 +1,9 @@
+### Run with Docker Compose
+
+```
+docker-compose up -d splunk
+```
+
 ### Run Splunk Docker Container
 
 ```
