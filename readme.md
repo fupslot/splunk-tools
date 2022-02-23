@@ -1,75 +1,54 @@
-### Run with Docker Compose
+## Run Slunk & Webhook 
 
 ```
-docker-compose up -d splunk
+docker-compose up -d
 ```
 
-### Run Splunk Docker Container
+Webhook endpoint: http://webhook:4000
 
-```
-docker run -d -p 8000:8000 -p 8088-8089:8088-8089 -e "SPLUNK_START_ARGS=--accept-license" -e "SPLUNK_PASSWORD=E7NK_6W*m_elWtPd" --name splunk splunk/splunk:latest
-```
+## Step 1. Adjust Global Settings
 
-### Splunk Forwarder Config
+Navigate to `Settings > Data Inputs > HTTP Event Collector` and click **Global Settings** button up top. Select `_json` as **Default Source Type**. 
 
-Path to a config folder in Docker
-```
-/opt/splunk/etc/apps/SplunkForwarder/default
-
-server.conf
-outputs.conf
-health.conf
-default-mode.conf
-app.conf
-```
-
-### Splunk REST API Reference Manual
-
-https://docs.splunk.com/Documentation/Splunk/8.2.5/RESTREF/RESTinput
-
-### Event Collector REST API
-
-https://docs.splunk.com/Documentation/SplunkCloud/8.2.2112/Data/HECRESTendpoints
+**Disable SSL** in case running Splunk in the docker container
 
 
-### Upload Data To Sluck
+## Step 2. Create HTTP Event Collector
 
-In order to upload data onto the Splunk first we need to configure the HTTP Event Collector. 
-The HTTP Event Collector is the HTTP server 
+First step is to upload the data onto the Splunk. In order to do that we need to configure the HTTP Event Collector. 
+With the HTTP Event Collector we can pass the events using HTTP POST requests.
 
 To configure the HTTP Event Collector navigate to `Settings > Data Inputs > HTTP Event Collector` within the Splunk web application. Choose or create new index that you want to push your data to. Set `Source Type` to `Automatic`.
 Once it's done you will see the token, use it to run the script below.
 
-#### Adjust Global Settings
+## Step 3. Upload Data
 
-Navigate to `Settings > Data Inputs > HTTP Event Collector` and click **Global Settings** button up top. Select `_json` as **Default Source Type**. Disable **SSL** in case running Splunk in the docker container.
+Use HTTP Event Collector token
 
-#### splunk-upload 
-
+**CISA Dataset**
 ```
 node ./splunk-upload.js --token=<token> --key=vulnerabilities ./data/cisa.json
 ```
 
-#### Error Messages
+**Pokemon Dataset**
+```
+node ./splunk-upload.js --token=<token> ./data/pokemons.json
+```
 
-**panic: socket hang up** - Disable **SSL** verification for the HTTP Event Collector
+## Step 4. Create Alert
 
+In progress...
 
-### Download CVE List
+## References
 
-https://cve.mitre.org/data/downloads/index.html
+1. Splunk REST API Reference Manual - https://docs.splunk.com/Documentation/Splunk/8.2.5/RESTREF/RESTinput
+
+2. Event Collector REST API - https://docs.splunk.com/Documentation/SplunkCloud/8.2.2112/Data/HECRESTendpoints
+
+3. Download CVE List - https://cve.mitre.org/data/downloads/index.html
+
+**Download CVE List**
 
 ```
 curl -v -H'If-Modified-Since: Sun, 20 Feb 2022 20:36:46 GMT' https://cve.mitre.org/data/downloads/allitems.csv
 ```
-
-### Forwarding & Receiving
-
-You can forward data from one Splunk Enterprise instance to another Splunk Enterprise instance or even to a non-Splunk system. The Splunk instance that performs the [forwarding](https://docs.splunk.com/Splexicon:Forwarding) is called a [forwarder](https://docs.splunk.com/Splexicon:Forwarder).
-
-
-#### Types of Forwarders
-
-**The universal forwarder** contains only the components that are necessary to forward data. Learn more about the universal forwarder in the Universal Forwarder manual. The universal forwarder **supersedes** the light forwarder for nearly all purposes and represents the best tool for sending data to indexers
-
-**The heavy forwarder** is a full Splunk Enterprise instance that can index, search, and change data as well as forward it. The heavy forwarder has some features disabled to reduce system resource usage.

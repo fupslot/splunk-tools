@@ -1,13 +1,23 @@
 version: '3.7'
 services:
   splunk:
-    container_name: splunk_forwarder
+    container_name: splunk
     image: splunk/splunk:latest
-    volumes:
-      - ./splunk/outputs.conf:/opt/splunk/etc/system/local/outputs.conf
     ports:
       - 8000:8000
       - 8088-8089:8088-8089
     environment:
       - SPLUNK_START_ARGS=--accept-license
       - SPLUNK_PASSWORD=E7NK_6W*m_elWtPd
+  webhook:
+    container_name: webhook
+    user: root
+    build:
+      context: .
+    image: fluentd
+    volumes:
+      - ./fluentd:/fluentd/etc/
+    ports:
+      - 4000:4000
+    logging:
+      driver: "local" 
