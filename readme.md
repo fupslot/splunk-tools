@@ -26,7 +26,7 @@ Once it's done you will see the token, use it to run the script below.
 First, navigate to `Settings > Searches, Reports and Alerts > New Alert` 
 
 1. Title: `Legendary Pokemon (Attack 150+)`
-2. Search: `index="pokemon" Attack >= 150 Legendary="TRUE"`
+2. Search: `index="pokemons" Attack >= 150 Legendary="TRUE"`
 3. App: `Search & Reporting`
 4. Alert Type: `Real-time`
 5. Throttle: `Off`
@@ -63,7 +63,12 @@ node ./splunk-upload.js --token=<token> ./data/pokemons.json
 
 2. Event Collector REST API - https://docs.splunk.com/Documentation/SplunkCloud/8.2.2112/Data/HECRESTendpoints
 
-3. Download CVE List - https://cve.mitre.org/data/downloads/index.html
+3. Custom Workflow Action Examples - https://dev.splunk.com/enterprise/docs/devtools/customworkflowactions/customworkflowactionexamples/
+
+4. Download CVE List - https://cve.mitre.org/data/downloads/index.html
+
+5. Search Reference - https://docs.splunk.com/Documentation/SplunkCloud/8.2.2112/SearchReference/Search
+
 
 **Download CVE List**
 

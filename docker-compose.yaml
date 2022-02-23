@@ -3,6 +3,8 @@ services:
   splunk:
     container_name: splunk
     image: splunk/splunk:latest
+    volumes:
+      - ./splunk/etc/system/local/workflow_actions.conf:/opt/splunk/etc/system/local/workflow_actions.conf
     ports:
       - 8000:8000
       - 8088-8089:8088-8089

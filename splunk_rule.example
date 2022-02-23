@@ -1,0 +1,7 @@
+Splunk Alert
+
+Legendary Pokemon (Attack 150+)
+
+index="pokemon" Attack >= 150 Legendary="TRUE"
+
+http://webhook:4000
